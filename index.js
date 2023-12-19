@@ -8,15 +8,15 @@ server.use(bp.json())
 
 const users = [
     {
-        user: "oggy",
+        name: "oggy",
         id: 1,
     },
     {
-        user: "boldoo",
+        name: "boldoo",
         id: 2,
     },
     {
-        user: "nakii",
+        name: "nakii",
         id: 3,
     },
 ]
@@ -35,7 +35,6 @@ server.put("/:id", (req, res) => {
     const id = req.params.id
     users.map((user) => {
         if(user.id === parseInt(id)){
-            console.log(id);
             user.name = req.body.name
         }
     })
@@ -45,8 +44,8 @@ server.put("/:id", (req, res) => {
 server.delete("/id", (req, res) => {
     const id = req.params.id
     const deleteuserID = users.findIndex((user) => user.id === parseInt(id))
-    if(deleteuserID !== 1){
-        users.splice(0, deleteuserID)
+    if(deleteuserID !== -1){
+        users.splice(1, deleteuserID)
     }
     res.send({success:true, users: users}).end()
 })

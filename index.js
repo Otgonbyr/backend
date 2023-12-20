@@ -41,14 +41,14 @@ server.put("/:id", (req, res) => {
     res.send({success:true, users: users}).end()
 })
 
-server.delete("/id", (req, res) => {
-    const id = req.params.id
-    const deleteuserID = users.findIndex((user) => user.id === parseInt(id))
-    if(deleteuserID !== -1){
-        users.splice(1, deleteuserID)
+app.delete('/:id', (req, res) => {
+    const id = req.params.id;
+    const deletedUserId = users.findIndex((user) => user.id === parseInt(id));
+    if (deletedUserId !== -1) {
+    users.splice(deletedUserId, 1);
     }
-    res.send({success:true, users: users}).end()
-})
+    response.send({ success: true, users: users }).end();
+   });
 
 server.listen(PORT, () => {
     console.log(` text ${PORT}`)

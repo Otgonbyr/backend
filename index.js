@@ -25,6 +25,12 @@ server.get("/", (req, res) => {
     res.send({success:true, users:users}).end()
 })
 
+server.get('/:id', (req, res) => {
+    const id = req.params.id;
+    const filteredData = users.filter((user) => user.id === parseInt(id));
+    res.send({ success: true, users: filteredData }).end();
+   });
+
 server.post("/", (req, res) => {
     const data = req.body
     users.push(data)
@@ -41,13 +47,13 @@ server.put("/:id", (req, res) => {
     res.send({success:true, users: users}).end()
 })
 
-app.delete('/:id', (req, res) => {
+server.delete('/:id', (req, res) => {
     const id = req.params.id;
     const deletedUserId = users.findIndex((user) => user.id === parseInt(id));
     if (deletedUserId !== -1) {
     users.splice(deletedUserId, 1);
     }
-    response.send({ success: true, users: users }).end();
+    res.send({ success: true, users: users }).end();
    });
 
 server.listen(PORT, () => {

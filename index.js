@@ -2,6 +2,7 @@ import bp from "body-parser";
 import express from "express";
 import mongoose from 'mongoose'
 import url from "../backend/schema/URLmodel.js";
+import { nanoid } from "nanoid";
 
 const server = express()
 const PORT = 8000
@@ -11,22 +12,28 @@ const MONGODB_URI = "mongodb+srv://otgonbayar0503:Hairtai77@oggydata.9wtbmtf.mon
 server.use(bp.json())
 
 server.get("/", async (req, res) => {
-    const resp = await url.find()
+    console.log(req.params.id);
+    const resp = await url.find({
+        shorturl: req.params.id
+    })
     res.send({ success: true, resp }).end()
 })
 
 server.post("/", async (req, res) => {
-    const NewUrl = await url.create(req.body)
+    const urlbody = req.body
+    const NewUrl = await url.create({
+        original: urlbody,
+        shorturl: nanoid()
+    })
     res.send({ success: true, urls: NewUrl }).end()
 })
 server.listen(PORT, async () => {
     try {
         mongoose.connect(MONGODB_URI)
-        console.log("exmaple 123");
     } catch (error) {
         console.log(error);
     }
-    console.log(` text ${PORT}`)
+    console.log(` connected to mongodb port ${PORT}`)
 })
 // const users = [
 //     {

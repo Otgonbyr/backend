@@ -1,7 +1,9 @@
 import mongoose from 'mongoose'
 
 const URLschema = new mongoose.Schema({
-    url : String
+    original: String,
+    shortURL: String
+    // url : String
 })
 const url = mongoose.model('test', URLschema)
 
